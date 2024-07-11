@@ -1,0 +1,36 @@
+trigger:
+ branches:
+   include:
+     - main
+
+
+pool: Default
+
+steps: 
+- task: TerraformInstaller@1
+  displayName: "Terraform Tool Installer"
+  inputs:
+    terraformVersion: 'latest'
+
+
+- task: TerraformTaskV4@4
+  displayName: 'Terraform init'
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: 'C:\Agent\vsts-agent-win-x64-3.240.1 (2)\_work\10\s\0.Module'
+    backendServiceArm: 'Free Trial(1)(b235a3e9-c945-454a-94b6-1ff59f8837bc)'
+    backendAzureRmResourceGroupName: 'MK_RG'
+    backendAzureRmStorageAccountName: 'mkstorage005'
+    backendAzureRmContainerName: 'mkcontainers'
+    backendAzureRmKey: 'Module.tfstate'
+
+- task: TerraformTaskV4@4
+  displayName: 'Terraform Apply'
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    workingDirectory: 'C:\Agent\vsts-agent-win-x64-3.240.1 (2)\_work\10\s\0.Module'
+    environmentServiceNameAzureRM: 'manoj-sc'
+
+ 
